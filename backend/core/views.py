@@ -6,8 +6,8 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, viewsets
 from rest_framework.exceptions import ValidationError
 
-from .serializers import VendorSerializer, ProductSerializer, CustomSerializer, OrderSerializer, OrderItemsSerializer, CustomerAddressSerializer, ProductRatingSerializer
-from .models import Vendor, Product, Customer, Order, OrderItems, CustomerAddress, ProductRating
+from .serializers import VendorSerializer, ProductSerializer, ProductCategorySerializer, CustomSerializer, OrderSerializer, OrderItemsSerializer, CustomerAddressSerializer, ProductRatingSerializer
+from .models import Vendor, Product, ProductCategory, Customer, Order, OrderItems, CustomerAddress, ProductRating
 from .pagination import CustomPagination
 
 
@@ -41,6 +41,17 @@ class ProductList(generics.ListCreateAPIView):
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+
+class CategoryList(generics.ListAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+
+
+class CategoryDetail(generics.RetrieveAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
     lookup_field = 'pk'
 
 
